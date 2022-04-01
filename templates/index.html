@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css"
+      integrity="sha512-5A8nwdMOWrSz20fDsjczgUidUBR8liPYU+WymTZP1lmY9G6Oc7HlZv156XqnsgNUzTyMefFTcsFH/tnJE/+xBg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style.css')}}"
+    />
+    <title>AGENDA</title>
+  </head>
+
+  <body>
+    <div class="modal-content">
+      <i class="fa fa-times cerrar" aria-hidden="true"></i>
+
+      <form action="" class="modal" autocomplete="off">
+        <h1 class="form_title">Contacto</h1>
+
+        <div class="form_div">
+          <input
+            type="text"
+            class="nombre form_input"
+            name="nombre"
+            placeholder=" "
+          />
+          <label for="" class="form_label">Nombre</label>
+        </div>
+
+        <div class="form_div">
+          <input
+            type="text"
+            class="apellido form_input"
+            name="apellido"
+            placeholder=" "
+          />
+          <label for="" class="form_label">Apellido</label>
+        </div>
+
+        <div class="form_div">
+          <input
+            type="text"
+            class="telefono form_input"
+            name="telefono"
+            placeholder=" "
+          />
+          <label for="" class="form_label">Telefono</label>
+        </div>
+
+        <input
+          type="button"
+          class="form_button actualizar"
+          value="Actualizar"
+        />
+      </form>
+    </div>
+    <div class="nav-left">
+      <i class="fa fa-times" onclick="toggle();" aria-hidden="true"></i>
+      <form class="form" autocomplete="off">
+        <div class="content-form">
+          <input type="text" class="form_input" name="nombre" placeholder=" " />
+          <label class="form_label" for="">Nombres</label>
+        </div>
+        <div class="content-form">
+          <input
+            type="text"
+            class="form_input"
+            name="apellido"
+            placeholder=" "
+          />
+          <label class="form_label" for="">Apellidos</label>
+        </div>
+        <div class="content-form">
+          <input
+            type="text"
+            class="form_input"
+            name="telefono"
+            placeholder=" "
+          />
+          <label class="form_label" for="">Telefono</label>
+        </div>
+
+        <button class="form_button" type="submit">AGREGAR</button>
+      </form>
+    </div>
+    <div class="contenedor">
+      <div class="nav">
+        <h1 class="titulo">CONTACTOS</h1>
+        <i class="fa fa-bars" onclick="toggle();" aria-hidden="true"></i>
+      </div>
+      <table class="tabla">
+        <thead>
+          <tr>
+            <th>nombre</th>
+            <th>apellido</th>
+            <th>telefono</th>
+            <th>opciones</th>
+          </tr>
+        </thead>
+        <tbody id="tbody"></tbody>
+      </table>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script src="{{ url_for('static', filename='js/main.js')}}"></script>
+  </body>
+</html>

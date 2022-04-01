@@ -1,0 +1,249 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+:root {
+  --color1: blue;
+  --color2: grey;
+  --bordercolor: #ddd;
+
+  --nomalsize: 1rem;
+  --smalsize: 0.75rem;
+}
+body {
+  width: 100%;
+  display: flex;
+}
+.contenedor {
+  width: calc(100% - 320px);
+}
+.modal-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  position: absolute;
+  width: 100%;
+  display: none;
+  background-color: #fff;
+  z-index: 100;
+}
+.modal-content.active {
+  display: flex;
+}
+.modal,
+.form {
+  width: 360px;
+  padding: 4rem 2rem;
+  border-radius: 1rem;
+  box-shadow: 0 10px 25px rgba(92, 99, 105, 0.2);
+}
+.form {
+  width: 250px;
+  border: 1px solid #ddd;
+  margin: 10px;
+}
+.form_title {
+  font-weight: 400;
+  margin-bottom: 3rem;
+}
+.form_div,
+.content-form {
+  position: relative;
+  height: 48px;
+  margin-bottom: 1.5rem;
+}
+.form_input,
+.content-form input {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  font-size: var(--nomalsize);
+  border: 1px solid var(--bordercolor);
+  border-radius: 0.5rem;
+  outline: none;
+  padding: 1rem;
+  background: none;
+
+  z-index: 1;
+}
+.form_label {
+  position: absolute;
+  left: 1rem;
+  top: 1rem;
+  padding: 0 0.25rem;
+  color: var(--color2);
+  font-size: var(--nomalsize);
+  transition: 0.3s;
+}
+.form_button {
+  display: block;
+  margin-left: auto;
+  padding: 0.75rem 2rem;
+  outline: none;
+  border: none;
+  background-color: var(--color1);
+  color: #fff;
+  font-size: var(--nomalsize);
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.form_button:hover {
+  box-shadow: 0 10px 36px rgba(0, 0, 0, 0.15);
+}
+.form_input:focus + .form_label {
+  top: -8px;
+  left: 0.8rem;
+  color: var(--color1);
+  font-size: var(--smalsize);
+  background-color: #fff;
+  font-weight: 500;
+  z-index: 10;
+}
+.form_input:not(:placeholder-shown).form_input:not(:focus) + .form_label {
+  top: -8px;
+  left: 0.8rem;
+  color: var(--color1);
+  font-size: var(--smalsize);
+  background-color: #fff;
+  font-weight: 500;
+  z-index: 10;
+}
+.form_input:focus {
+  border: 1.5px solid var(--color1);
+}
+.fa-times {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  border-radius: 5px;
+}
+
+.nav-left {
+  width: 320px;
+  border-left: 1px solid #ddd;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: sticky;
+  position: fixed;
+  transition: 0.5s ease;
+  right: 0;
+  background-color: #fff;
+}
+.nav-left.active {
+  right: 0;
+}
+.nav-left > .fa-times{
+  display: none;
+}
+body .tabla {
+  width: 1050px;
+  max-width: 95%;
+  margin: 2rem auto;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+.titulo {
+  margin-left: 20px;
+  margin-top: 2rem;
+}
+.fa {
+  padding: 10px;
+  font-size: 20px;
+  border: 1px solid #ddd;
+  cursor: pointer;
+}
+.fa-pencil-square-o {
+  color: green;
+}
+.fa-trash-o {
+  color: red;
+}
+.tabla th,
+.tabla td {
+  text-align: center;
+  border-bottom: 1px solid #ddd;
+  padding: 10px 5px;
+}
+.tabla thead tr {
+  background: var(--color1);
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+.tabla tbody tr:hover {
+  background: rgba(221, 221, 221, 0.452);
+}
+.tabla td {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.fa-bars {
+  display: none;
+}
+@media (max-width: 950px) {
+  .nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .fa-bars {
+    display: block;
+    margin-top: 2rem;
+    margin-right: 18px;
+  }
+  .nav-left {
+    right: -325px;
+  }
+  .nav-left > .fa-times{
+    display: inherit;
+  }
+  .contenedor {
+    width: 100%;
+  }
+  .modal,
+  .form {
+    width: 315px;
+  }
+  .form {
+    width: 280px;
+  }
+}
+@media (max-width: 750px) {
+  .tabla tbody td::before {
+    content: attr(data-label);
+    text-transform: uppercase;
+    font-weight: 600;
+    float: left;
+  }
+  thead {
+    display: none;
+  }
+  .tabla tr {
+    border: 1px solid #ddd;
+    margin: 20px 0;
+    display: block;
+    border-radius: 5px;
+    box-shadow: 0 10px 25px rgb(92 99 105 / 20%);
+    transition: .5s;
+  }
+  .tabla tbody tr:hover {
+    background: none;
+    box-shadow: 2px 2px 5px #999;
+  }
+  .tabla tbody tr td {
+    display: block;
+    text-align: right;
+    padding: 10px 10px;
+  }
+}
