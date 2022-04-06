@@ -17,6 +17,18 @@ body {
   width: 100%;
   display: flex;
 }
+
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
 .contenedor {
   width: calc(100% - 320px);
 }
@@ -142,7 +154,7 @@ body {
 .nav-left.active {
   right: 0;
 }
-.nav-left > .fa-times{
+.nav-left > .fa-times {
   display: none;
 }
 body .tabla {
@@ -205,7 +217,7 @@ body .tabla {
   .nav-left {
     right: -325px;
   }
-  .nav-left > .fa-times{
+  .nav-left > .fa-times {
     display: inherit;
   }
   .contenedor {
@@ -235,7 +247,7 @@ body .tabla {
     display: block;
     border-radius: 5px;
     box-shadow: 0 10px 25px rgb(92 99 105 / 20%);
-    transition: .5s;
+    transition: 0.5s;
   }
   .tabla tbody tr:hover {
     background: none;

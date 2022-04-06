@@ -180,7 +180,5 @@ cerrar.addEventListener("click", () => {
 });
 
 function toggle() {
-  // document.querySelector('.toggle').addEventListener('click',()=>{
   document.querySelector(".nav-left").classList.toggle("active");
-  // })
 }

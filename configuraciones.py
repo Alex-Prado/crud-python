@@ -1,6 +1,3 @@
-from distutils.command.config import config
-from matplotlib.pyplot import cla
-
 
 class Desarrollo():
     DEBUG = True
