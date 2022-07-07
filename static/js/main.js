@@ -1,94 +1,84 @@
-const tbody = document.getElementById("tbody");
-const form = document.querySelector(".form");
-const btnactualizar = document.querySelector(".actualizar");
-const input = document.querySelectorAll(".content-form > input");
-const inputmodal = document.querySelectorAll(".form_div > input");
-const modal = document.querySelector(".modal-content");
-const cerrar = document.querySelector(".cerrar");
-let datos = {};
-
-// LISTAR---------------------------
+const domId = (element) => {
+  return document.getElementById(element);
+};
+const domElem = (element) => {
+  return document.querySelector(element);
+};
+const message = (message, type) => {
+  toastr.options = {
+    showMethod: "slideDown",
+    progressBar: true,
+    timeOut: "1500",
+    positionClass: "toast-top-right",
+  };
+  if (type == "success") {
+    return toastr.success(message);
+  }
+  if (type == "error") {
+    return toastr.error(message);
+  }
+  if (type == "warning") {
+    return toastr.warning(message);
+  }
+};
+domElem(".cerrar").addEventListener("click", () => {
+  domElem(".modal-content").classList.remove("active");
+});
+function toggle() {
+  domElem(".nav-left").classList.toggle("active");
+}
+const nav = () => {
+  domElem(".nav-left").classList.remove("active");
+  domElem(".modal-content").classList.remove("active");
+  domElem(".form").reset();
+};
+// ------------------------
+// --LISTAR CONTACTO
+// -------------------------
 const listarcontactos = () => {
   fetch("/listar")
     .then((res) => res.json())
     .then((data) => {
+      domId("tbody").innerHTML = "";
       data.forEach((element) => {
-        const tr = document.createElement("tr");
-        const tdnombre = document.createElement("td");
-        const tdapellido = document.createElement("td");
-        const tdtelefono = document.createElement("td");
+        const template = domId("usetemplate").content.cloneNode(true);
+        const updateUser = template.querySelectorAll(".option > i")[0];
+        const deleteUser = template.querySelectorAll(".option > i")[1];
+        template.querySelectorAll("td")[0].innerHTML = element[1];
+        template.querySelectorAll("td")[1].innerHTML = element[2];
+        template.querySelectorAll("td")[2].innerHTML = element[3];
+        domId("tbody").appendChild(template);
 
-        const tdacciones = document.createElement("td");
-        const actualizar = document.createElement("i");
-        const eliminar = document.createElement("i");
-
-        actualizar.classList = "fa fa-pencil-square-o";
-        eliminar.classList = "fa fa-trash-o";
-
-        eliminar.addEventListener("click", () => {
+        deleteUser.addEventListener("click", () => {
           fetch(`/eliminar/${element[0]}`, {
             method: "DELETE",
           })
             .then((res) => res.text())
             .then((data) => {
-              if (data != "error") {
-                toastr.error("CONTACTO ELIMINADO", {
-                  timeOut: "1000",
-                  extendedTImeout: "0",
-                });
-                tbody.innerHTML = "";
-                listarcontactos();
-              } else {
-                toastr.error("CONTACTO NO ENCONTRADO", {
-                  timeOut: "1000",
-                  extendedTImeout: "0",
-                });
-              }
+              data == "error"
+                ? message("CONTACTO NO ENCONTRADO", "error")
+                : (message("CONTACTO ELIMINADO", "error"), listarcontactos());
             });
         });
 
-        actualizar.addEventListener("click", () => {
-          fetch(`/mostrar/${element[0]}`)
-            .then((res) => res.json())
-            .then((data) => {
-              document.querySelector(".modal > .actualizar").id = data[0];
-              document.querySelector(".form_div > .nombre").value = data[1];
-              document.querySelector(".form_div > .apellido").value = data[2];
-              document.querySelector(".form_div > .telefono").value = data[3];
-              modal.classList.add("active");
-            });
+        updateUser.addEventListener("click", () => {
+          domElem(".modal > .actualizar").id = element[0];
+          domElem(".form_div > .nombre").value = element[1];
+          domElem(".form_div > .apellido").value = element[2];
+          domElem(".form_div > .telefono").value = element[3];
+          domElem(".modal-content").classList.add("active");
         });
-
-        tdacciones.append(actualizar);
-        tdacciones.append(eliminar);
-
-        tdnombre.setAttribute('data-label','NOMBRE')
-        tdapellido.setAttribute('data-label','APELLIDO')
-        tdtelefono.setAttribute('data-label','TELEFONO')
-        tdacciones.setAttribute('data-label','ACCIONES')
-
-        tdnombre.innerHTML = element[1];
-        tdapellido.innerHTML = element[2];
-        tdtelefono.innerHTML = element[3];
-
-        tr.append(tdnombre);
-        tr.append(tdapellido);
-        tr.append(tdtelefono);
-        tr.append(tdacciones);
-
-        tbody.append(tr);
       });
     });
 };
 listarcontactos();
-
-// AGREGAR-----------------------------
-form.addEventListener("submit", (e) => {
+// ------------------------
+// --AGREGAR CONTACTO
+// -------------------------
+domElem(".form").addEventListener("submit", (e) => {
   e.preventDefault();
-  input.forEach((el) => {
-    datos[el.name] = el.value;
-  });
-  const datosjson = JSON.stringify(datos);
+  const formdata = Object.fromEntries(new FormData(e.target));
+  const datosjson = JSON.stringify(formdata);
 
   fetch("/agregar", {
     method: "POST",
@@ -97,88 +87,49 @@ form.addEventListener("submit", (e) => {
   })
     .then((res) => res.text())
     .then((data) => {
-      if (data == "nombre") {
-        toastr.error(
-          "El nombre debe tener maximo 20 digitos y todos deben ser letras",
-          {
-            timeOut: "1000",
-            extendedTImeout: "0",
-          }
-        );
-      } else if (data == "telefono") {
-        toastr.error(
-          "El telefono debe tener maximo 10 digitos y todos deben ser numeros",
-          {
-            timeOut: "1000",
-            extendedTImeout: "0",
-          }
-        );
-      } else {
-        toastr.success("CONTACTO AGREGADO", {
-          timeOut: "1000",
-          extendedTImeout: "0",
-        });
-        document.querySelector('.nav-left').classList.remove('active')
-        input.forEach((element) => {
-          element.value = "";
-        });
-        tbody.innerHTML = "";
-        listarcontactos();
-      }
+      data == "nombre"
+        ? message(
+            "El nombre debe tener maximo 20 digitos y todos deben ser letras",
+            "error"
+          )
+        : data == "telefono"
+        ? message(
+            "El telefono debe tener maximo 10 digitos y todos deben ser numeros",
+            "error"
+          )
+        : (message("CONTACTO AGREGADO", "success"), listarcontactos(), nav());
+      listarcontactos();
     });
 });
-
-// ACTUALIZAR-----------------------
-btnactualizar.addEventListener("click", () => {
-  inputmodal.forEach((element) => {
-    datos[element.name] = element.value;
-  });
-  const dataupdate = JSON.stringify(datos);
-
-  fetch(`/actualizar/${btnactualizar.id}`, {
+// ------------------------
+// --ACTUALIZAR CONTACTO
+// -------------------------
+domElem(".modal").addEventListener("submit", (e) => {
+  e.preventDefault();
+  const id = domElem(".modal > .actualizar").id;
+  const formdata = Object.fromEntries(new FormData(e.target));
+  const dataupdate = JSON.stringify(formdata);
+  fetch(`/actualizar/${id}`, {
     method: "PUT",
     body: dataupdate,
     headers: { "Content-Type": "application/json" },
   })
     .then((res) => res.text())
     .then((data) => {
-      if (data == "nombre") {
-        toastr.error(
-          "El nombre debe tener maximo 20 digitos y todos deben ser letras",
-          {
-            timeOut: "1000",
-            extendedTImeout: "0",
-          }
-        );
-      } else if (data == "telefono") {
-        toastr.error(
-          "El telefono debe tener maximo 10 digitos y todos deben ser numeros",
-          {
-            timeOut: "2000",
-            extendedTImeout: "0",
-          }
-        );
-      } else if (data == "error") {
-        toastr.error("Contacto no encontrado", {
-          timeOut: "1000",
-          extendedTImeout: "0",
-        });
-      } else {
-        toastr.success("CONTACTO ACTUALIZADO", {
-          timeOut: "1000",
-          extendedTImeout: "0",
-        });
-        modal.classList.remove("active");
-        tbody.innerHTML = "";
-        listarcontactos();
-      }
+      data == "nombre"
+        ? message(
+            "El nombre debe tener maximo 20 digitos y todos deben ser letras",
+            "error"
+          )
+        : data == "telefono"
+        ? message(
+            "El telefono debe tener maximo 10 digitos y todos deben ser numeros",
+            "error"
+          )
+        : data == " error"
+        ? message("Contacto no encontrado", "error")
+        : (message("CONTACTO ACTUALIZADO", "success"),
+          listarcontactos(),
+          nav());
     });
 });
-
-cerrar.addEventListener("click", () => {
-  modal.classList.remove("active");
-});
-
-function toggle() {
-  document.querySelector(".nav-left").classList.toggle("active");
-}

@@ -6,17 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link
       rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css"
-      integrity="sha512-5A8nwdMOWrSz20fDsjczgUidUBR8liPYU+WymTZP1lmY9G6Oc7HlZv156XqnsgNUzTyMefFTcsFH/tnJE/+xBg=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    />
-    <link
-      rel="stylesheet"
       href="{{ url_for('static', filename='css/style.css')}}"
     />
     <title>AGENDA</title>
@@ -26,7 +15,7 @@
     <div class="modal-content">
       <i class="fa fa-times cerrar" aria-hidden="true"></i>
 
-      <form action="" class="modal" autocomplete="off">
+      <form action="" class="modal animate__animated animate__fadeIn" autocomplete="off">
         <h1 class="form_title">Contacto</h1>
 
         <div class="form_div">
@@ -60,15 +49,15 @@
         </div>
 
         <input
-          type="button"
+          type="submit"
           class="form_button actualizar"
-          value="Actualizar"
+          value="ACTUALIZAR"
         />
       </form>
     </div>
     <div class="nav-left">
       <i class="fa fa-times" onclick="toggle();" aria-hidden="true"></i>
-      <form class="form" autocomplete="off">
+      <form class="form modal animate__animated animate__fadeInRight" autocomplete="off">
         <div class="content-form">
           <input type="text" class="form_input" name="nombre" placeholder=" " />
           <label class="form_label" for="">Nombres</label>
@@ -97,10 +86,10 @@
     </div>
     <div class="contenedor">
       <div class="nav">
-        <h1 class="titulo">CONTACTOS</h1>
+        <h2 class="titulo">CONTACTOS</h2>
         <i class="fa fa-bars" onclick="toggle();" aria-hidden="true"></i>
       </div>
-      <table class="tabla">
+      <table class="tabla animate__animated animate__fadeIn">
         <thead>
           <tr>
             <th>nombre</th>
@@ -110,6 +99,17 @@
           </tr>
         </thead>
         <tbody id="tbody"></tbody>
+        <template id="usetemplate">
+          <tr>
+            <td data-label="NOMBRE"></td>
+            <td data-label="APELLIDO"></td>
+            <td data-label="TELEFONO"></td>
+            <td data-label="ACCIONES" class="option">
+              <i class="fa-solid fa-user-pen"></i>
+              <i class="fa-solid fa-trash-can"></i>
+            </td>
+          </tr>
+        </template>
       </table>
     </div>
 

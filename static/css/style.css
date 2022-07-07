@@ -1,4 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
+@import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css");
+@import url("https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css");
+@import url("https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css");
 * {
   margin: 0;
   padding: 0;
@@ -6,21 +9,21 @@
   font-family: "Poppins", sans-serif;
 }
 :root {
-  --color1: blue;
+  --color1: #111188;
   --color2: grey;
   --bordercolor: #ddd;
-
+  --fond: #f1e8e8;
   --nomalsize: 1rem;
   --smalsize: 0.75rem;
 }
 body {
   width: 100%;
+  background-color: #f8f5f5;
   display: flex;
 }
 
-
-input[type=number]::-webkit-inner-spin-button,
-input[type=number]::-webkit-outer-spin-button {
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
@@ -37,36 +40,40 @@ input[type="number"] {
   justify-content: center;
   align-items: center;
   height: 100vh;
-  position: absolute;
+  position: fixed;
   width: 100%;
   display: none;
-  background-color: #fff;
+  background-color: var(--fond);
   z-index: 100;
 }
 .modal-content.active {
   display: flex;
 }
-.modal,
+
 .form {
-  width: 360px;
-  padding: 4rem 2rem;
-  border-radius: 1rem;
+  width: min(94%, 360px);
+  padding: 4rem 18px;
+  border: 1px solid #ddd;
+  background-color: #fff;
   box-shadow: 0 10px 25px rgba(92, 99, 105, 0.2);
 }
-.form {
-  width: 250px;
-  border: 1px solid #ddd;
-  margin: 10px;
+.modal {
+  width: min(92%, 394px);
+  padding: 6rem 30px;
+  background-color: #fff;
+  box-shadow: 0 10px 25px rgba(92, 99, 105, 0.2);
 }
+
 .form_title {
   font-weight: 400;
   margin-bottom: 3rem;
+  text-transform: uppercase;
 }
 .form_div,
 .content-form {
   position: relative;
-  height: 48px;
-  margin-bottom: 1.5rem;
+  height: 40px;
+  margin-bottom: 1rem;
 }
 .form_input,
 .content-form input {
@@ -77,7 +84,7 @@ input[type="number"] {
   height: 100%;
   font-size: var(--nomalsize);
   border: 1px solid var(--bordercolor);
-  border-radius: 0.5rem;
+  border-radius: 2px;
   outline: none;
   padding: 1rem;
   background: none;
@@ -87,24 +94,26 @@ input[type="number"] {
 .form_label {
   position: absolute;
   left: 1rem;
-  top: 1rem;
+  top: 10px;
   padding: 0 0.25rem;
   color: var(--color2);
-  font-size: var(--nomalsize);
+  font-size: var(--smalsize);
   transition: 0.3s;
 }
 .form_button {
   display: block;
   margin-left: auto;
-  padding: 0.75rem 2rem;
+  height: 40px;
+  padding: 0 2rem;
   outline: none;
   border: none;
   background-color: var(--color1);
   color: #fff;
-  font-size: var(--nomalsize);
-  border-radius: 0.5rem;
+  font-size: var(--smalsize);
+  border-radius: 2px;
   cursor: pointer;
   transition: 0.3s;
+  font-weight: 600;
 }
 .form_button:hover {
   box-shadow: 0 10px 36px rgba(0, 0, 0, 0.15);
@@ -112,7 +121,7 @@ input[type="number"] {
 .form_input:focus + .form_label {
   top: -8px;
   left: 0.8rem;
-  color: var(--color1);
+  color: var(--color2);
   font-size: var(--smalsize);
   background-color: #fff;
   font-weight: 500;
@@ -121,7 +130,7 @@ input[type="number"] {
 .form_input:not(:placeholder-shown).form_input:not(:focus) + .form_label {
   top: -8px;
   left: 0.8rem;
-  color: var(--color1);
+  color: var(--color2);
   font-size: var(--smalsize);
   background-color: #fff;
   font-weight: 500;
@@ -145,11 +154,11 @@ input[type="number"] {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  position: sticky;
   position: fixed;
   transition: 0.5s ease;
   right: 0;
-  background-color: #fff;
+  background-color: var(--fond);
+  z-index: 10;
 }
 .nav-left.active {
   right: 0;
@@ -163,21 +172,24 @@ body .tabla {
   margin: 2rem auto;
   border-collapse: collapse;
   table-layout: fixed;
+  font-size: 14px;
 }
 .titulo {
   margin-left: 20px;
   margin-top: 2rem;
 }
-.fa {
-  padding: 10px;
+.fa-solid {
   font-size: 20px;
-  border: 1px solid #ddd;
+  width: 35px;
+  height: 35px;
+  text-align: center;
+  line-height: 35px;
   cursor: pointer;
 }
-.fa-pencil-square-o {
+.fa-user-pen {
   color: green;
 }
-.fa-trash-o {
+.fa-trash-can {
   color: red;
 }
 .tabla th,
@@ -192,8 +204,11 @@ body .tabla {
   text-transform: uppercase;
   letter-spacing: 1px;
 }
+.tabla tbody tr {
+  background-color: #fff;
+}
 .tabla tbody tr:hover {
-  background: rgba(221, 221, 221, 0.452);
+  background-color: #dddddd73;
 }
 .tabla td {
   white-space: nowrap;
@@ -223,13 +238,6 @@ body .tabla {
   .contenedor {
     width: 100%;
   }
-  .modal,
-  .form {
-    width: 315px;
-  }
-  .form {
-    width: 280px;
-  }
 }
 @media (max-width: 750px) {
   .tabla tbody td::before {
@@ -237,6 +245,9 @@ body .tabla {
     text-transform: uppercase;
     font-weight: 600;
     float: left;
+  }
+  .tabla tbody .option::before {
+    line-height: 35px;
   }
   thead {
     display: none;
