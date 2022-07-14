@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="theme-color" content="#111188">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link
       rel="stylesheet"
@@ -15,7 +16,11 @@
     <div class="modal-content">
       <i class="fa fa-times cerrar" aria-hidden="true"></i>
 
-      <form action="" class="modal animate__animated animate__fadeIn" autocomplete="off">
+      <form
+        action=""
+        class="modal animate__animated animate__fadeIn"
+        autocomplete="off"
+      >
         <h1 class="form_title">Contacto</h1>
 
         <div class="form_div">
@@ -57,7 +62,10 @@
     </div>
     <div class="nav-left">
       <i class="fa fa-times" onclick="toggle();" aria-hidden="true"></i>
-      <form class="form modal animate__animated animate__fadeInRight" autocomplete="off">
+      <form
+        class="form modal animate__animated animate__fadeInRight"
+        autocomplete="off"
+      >
         <div class="content-form">
           <input type="text" class="form_input" name="nombre" placeholder=" " />
           <label class="form_label" for="">Nombres</label>
@@ -105,8 +113,12 @@
             <td data-label="APELLIDO"></td>
             <td data-label="TELEFONO"></td>
             <td data-label="ACCIONES" class="option">
-              <i class="fa-solid fa-user-pen"></i>
-              <i class="fa-solid fa-trash-can"></i>
+              <i class="fa-solid fa-user-pen">
+                <span>editar</span>
+              </i>
+              <i class="fa-solid fa-trash-can">
+                <span>eliminar</span>
+              </i>
             </td>
           </tr>
         </template>

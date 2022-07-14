@@ -1,12 +1,16 @@
 
 from flask import Flask, render_template, json, request
 from flask_mysqldb import MySQL
-from configuraciones import config
+# from configuraciones import config
 from validaciones import *
 
 app = Flask(__name__)
+# conexion = MySQL(app)
+app.config['MYSQL_HOST'] = 'localhost'
+app.config['MYSQL_USER'] = 'root'
+app.config['MYSQL_PASSWORD'] = ''
+app.config['MYSQL_DB'] = 'agenda'
 conexion = MySQL(app)
-
 
 @app.route('/')
 def index():
@@ -103,5 +107,5 @@ def listar_contactos():
 
 
 if __name__ == '__main__':
-    app.config.from_object(config['llave'])
+    # app.config.from_object(config['llave'])
     app.run()
